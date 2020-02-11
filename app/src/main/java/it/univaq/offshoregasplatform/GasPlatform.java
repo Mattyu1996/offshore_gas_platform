@@ -1,9 +1,16 @@
 package it.univaq.offshoregasplatform;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "trivelle")
-public class GasPlatform {
+public class GasPlatform implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
 
     private String denominazione, stato, tipo, minerale, operatore, titoloMinerario, centraleCollegata, zona, foglio,
             sezioneUnimig, capitaneriaDiPorto, dimensioni;
@@ -13,6 +20,52 @@ public class GasPlatform {
 
 
     public GasPlatform(){}
+
+    public GasPlatform(Parcel in){
+        this.denominazione = in.readString();
+        this. stato = in.readString();
+        this.tipo = in.readString();
+        this.minerale = in.readString();
+        this.operatore = in.readString();
+        this.titoloMinerario = in.readString();
+        this.centraleCollegata = in.readString();
+        this.zona = in.readString();
+        this.foglio = in.readString();
+        this.sezioneUnimig = in.readString();
+        this.capitaneriaDiPorto = in.readString();
+        this.capitaneriaDiPorto = in.readString();
+        this.codice = in.readInt();
+        this.annoCostruzione = in.readInt();
+        this.pozziAllacciati = in.readInt();
+        this.pozziProduttiviNonEroganti = in.readInt();
+        this.pozziInProduzione = in.readInt();
+        this.pozziInMonitoraggio = in.readInt();
+        this.distanzaCosta = in.readInt();
+        this.distanzaCosta = in.readInt();
+        this.profonditaFondale = in.readInt();
+        this.latitudine= in.readDouble();
+        this.longitudine = in.readDouble();
+    }
+
+    public static Parcelable.Creator<GasPlatform> CREATOR = new Creator<GasPlatform>() {
+        @Override
+        public GasPlatform createFromParcel(Parcel source) {
+            return new GasPlatform(source);
+        }
+
+        @Override
+        public GasPlatform[] newArray(int size) {
+            return new GasPlatform[size];
+        }
+    };
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDenominazione() {
         return denominazione;
@@ -196,5 +249,37 @@ public class GasPlatform {
 
     public void setLongitudine(Double longitudine) {
         this.longitudine = longitudine;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(denominazione);
+        dest.writeString(stato);
+        dest.writeString(tipo);
+        dest.writeString(minerale);
+        dest.writeString(operatore);
+        dest.writeString(titoloMinerario);
+        dest.writeString(centraleCollegata);
+        dest.writeString(zona);
+        dest.writeString(foglio);
+        dest.writeString(sezioneUnimig);
+        dest.writeString(capitaneriaDiPorto);
+        dest.writeString(dimensioni);
+        dest.writeInt(codice);
+        dest.writeInt(annoCostruzione);
+        dest.writeInt(pozziAllacciati);
+        dest.writeInt(pozziProduttiviNonEroganti);
+        dest.writeInt(pozziInProduzione);
+        dest.writeInt(pozziInMonitoraggio);
+        dest.writeInt(distanzaCosta);
+        dest.writeInt(altezza);
+        dest.writeInt(profonditaFondale);
+        dest.writeDouble(latitudine);
+        dest.writeDouble(longitudine);
     }
 }

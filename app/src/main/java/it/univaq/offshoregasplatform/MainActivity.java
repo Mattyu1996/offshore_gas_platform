@@ -3,6 +3,7 @@ package it.univaq.offshoregasplatform;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,33 +28,9 @@ public class MainActivity extends AppCompatActivity {
         getGasPlatformsFromHttp();
         setContentView(R.layout.activity_main);
 
-        ArrayList g = new ArrayList<GasPlatform>();
-        GasPlatform gs = new GasPlatform();
-        gs.setAltezza(180);
-        gs.setAnnoCostruzione(2020);
-        gs.setCapitaneriaDiPorto("capitaneria");
-        gs.setCentraleCollegata("pes");
-        gs.setCodice(5050);
-        gs.setDenominazione("pasqualone");
-        gs.setDimensioni("tanto");
-        gs.setDistanzaCosta(10);
-        gs.setFoglio("un tot");
-        gs.setLatitudine(55.99);
-        gs.setLongitudine(56.99);
-        gs.setMinerale("quarzo");
-        gs.setOperatore("giggi");
-        gs.setPozziAllacciati(4);
-        gs.setPozziInMonitoraggio(2);
-        gs.setPozziInProduzione(6);
-        gs.setPozziProduttiviNonEroganti(0);
-        gs.setProfonditaFondale(8);
-        gs.setSezioneUnimig("non so di che parli");
-        gs.setStato("italia");
-        gs.setTipo("forza pescara");
-        gs.setTitoloMinerario("tosto");
-        gs.setZona("colliwood");
 
-        DataBase.getInstance(this).gasPlatform_dao().save(g);
+
+
 
     }
 
@@ -132,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
                             System.out.println("La richiesta http ha ottenuto: " + platforms.size()+" piattaforme");
                             //Inserire nel DB
+                            Intent intent = new Intent(MainActivity.this, DatabaseService.class);
+                            intent.putExtra(DatabaseService.EXTRA_ACTION, DatabaseService.ACTION_SAVE);
+                            intent.putParcelableArrayListExtra("platforms", platforms);
+                            startService(intent);
 
                         }
                     }, new Response.ErrorListener() {
@@ -147,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("firstTime", false);
             editor.apply();
+        }
+        else{
+            Intent intent = new Intent(MainActivity.this, DatabaseService.class);
+            intent.putExtra(DatabaseService.EXTRA_ACTION, DatabaseService.ACTION_GET);
+            startService(intent);
         }
     }
 }
