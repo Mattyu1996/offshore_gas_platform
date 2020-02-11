@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         gs.setZona("colliwood");
 
         DataBase.getInstance(this).gasPlatform_dao().save(g);
+        DataBase.getInstance(this).gasPlatform_dao().getAll();
+
 
     }
 

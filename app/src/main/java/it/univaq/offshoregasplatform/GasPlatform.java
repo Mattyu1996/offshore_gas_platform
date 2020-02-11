@@ -1,8 +1,9 @@
 package it.univaq.offshoregasplatform;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "trivelle")
+@Entity(tableName = "trivelle", primaryKeys = {"id"})
 public class GasPlatform {
 
     private String denominazione, stato, tipo, minerale, operatore, titoloMinerario, centraleCollegata, zona, foglio,
@@ -11,8 +12,17 @@ public class GasPlatform {
             pozziInProduzione, pozziInMonitoraggio, distanzaCosta, altezza, profonditaFondale;
     private Double latitudine, longitudine;
 
+    private long id;
+
+
 
     public GasPlatform(){}
+
+
+
+    public Long getId(){ return id; }
+
+    public void setId(Long id){ this.id = id; }
 
     public String getDenominazione() {
         return denominazione;
