@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = GasPlatform.class, version = 1)
 public abstract class DataBase extends RoomDatabase {
 
-    //public abstract CityDao cityDao();
+    public abstract GasPlatform_DAO gasPlatform_dao();
 
     private static DataBase instance = null;
 
