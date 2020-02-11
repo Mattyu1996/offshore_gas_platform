@@ -1,5 +1,8 @@
 package it.univaq.offshoregasplatform;
 
+import androidx.room.Entity;
+
+@Entity(tableName = "trivelle")
 public class GasPlatform {
 
     private String denominazione, stato, tipo, minerale, operatore, titoloMinerario, centraleCollegata, zona, foglio,
@@ -7,6 +10,7 @@ public class GasPlatform {
     private int codice, annoCostruzione, pozziAllacciati, pozziProduttiviNonEroganti,
             pozziInProduzione, pozziInMonitoraggio, distanzaCosta, altezza, profonditaFondale;
     private Double latitudine, longitudine;
+
 
     public GasPlatform(){}
 
