@@ -2,11 +2,19 @@ package it.univaq.offshoregasplatform;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import android.Manifest;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +29,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final int REQUEST_LOCATION = 17;
+
     FusedLocationProviderClient locationClient;
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -106,27 +116,66 @@ public class MainActivity extends AppCompatActivity {
         final GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
         final ArrayList<GasPlatform> piattaforme = provider.getPlatforms().getValue();
         System.out.println("Nel ViewModel ci sono: "+piattaforme.size()+" piattaforme");
-        //Ottengo la location dello smartphone
-        locationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                ArrayList<GasPlatform> piattaformeVicine = new ArrayList<>();
-                //Per ogni piattaforma presente nel ViewModel calcolo la distanza dall'utente
-                for (GasPlatform plt: piattaforme){
-                    //Calcolo la distanza fra la location dello smartphone e la piattaforme in questione
-                    float[] results = new float[1];
-                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), plt.getLatitudine(), plt.getLongitudine(), results);
-                    //Converto la distanza da metri a chilometri
-                    float distanzaInKm = results[0]/1000;
-                    //System.out.println("Distanza dalla piattaforma "+plt.getDenominazione()+": "+distanzaInKm+" km");
-                    //Se la piattaforma è nel raggio di 100km allora la inserisco nelle piattaforme vicine
-                    if(distanzaInKm <= 100){
-                        piattaformeVicine.add(plt);
+        //Controllo se l'app ha il permesso della geolocalizzazione
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED){
+            //Ottengo la location dello smartphone
+            locationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    ArrayList<GasPlatform> piattaformeVicine = new ArrayList<>();
+                    //Per ogni piattaforma presente nel ViewModel calcolo la distanza dall'utente
+                    for (GasPlatform plt: piattaforme){
+                        //Calcolo la distanza fra la location dello smartphone e la piattaforme in questione
+                        float[] results = new float[1];
+                        Location.distanceBetween(location.getLatitude(), location.getLongitude(), plt.getLatitudine(), plt.getLongitudine(), results);
+                        //Converto la distanza da metri a chilometri
+                        float distanzaInKm = results[0]/1000;
+                        //System.out.println("Distanza dalla piattaforma "+plt.getDenominazione()+": "+distanzaInKm+" km");
+                        //Se la piattaforma è nel raggio di 100km allora la inserisco nelle piattaforme vicine
+                        if(distanzaInKm <= 100){
+                            piattaformeVicine.add(plt);
+                        }
                     }
+                    System.out.println("Nel ViewModel ci sono: "+piattaformeVicine.size()+" piattaforme vicine");
+                    provider.setNearPlatforms(piattaformeVicine);
                 }
-                System.out.println("Nel ViewModel ci sono: "+piattaformeVicine.size()+" piattaforme vicine");
-                provider.setNearPlatforms(piattaformeVicine);
+            });
+        }
+        else{
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously*
+                new PermissionDialog().show(getSupportFragmentManager(),"permission");
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             }
-        });
+
+        }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION: {
+                //controllo la risposta alla richiesta del permesso
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permesso garantito
+                    System.out.println("Permesso Garantito");
+                    //Ottengo il dialogo dal tag e lo chiudo
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag("permission");
+                    if(fragment != null){
+                        DialogFragment dialog = (DialogFragment) fragment;
+                        dialog.dismiss();
+                    }
+
+                } else {
+                    // Permesso rifiutato
+                    System.out.println("Permesso Rifiutato");
+                }
+                return;
+            }
+        }
+    }
+
 }
