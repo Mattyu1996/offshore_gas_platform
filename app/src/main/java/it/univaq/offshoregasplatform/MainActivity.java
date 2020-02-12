@@ -1,6 +1,7 @@
 package it.univaq.offshoregasplatform;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,6 +23,15 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<GasPlatform> platforms = intent.getParcelableArrayListExtra("platforms");
                 GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
                 provider.setPlatforms(platforms);
+                provider.getPlatforms().observe(MainActivity.this, new Observer<ArrayList<GasPlatform>>() {
+
+                    @Override
+                    public void onChanged(ArrayList<GasPlatform> platforms) {
+
+                        System.out.println("Nel ViewModel ci sono: "+platforms.size()+" piattaforme");
+
+                    }
+                });
             }
         }
     };
