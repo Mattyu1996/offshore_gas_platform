@@ -24,25 +24,25 @@ public class FragmentGasPlatform extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gs_list, container);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
-        provider.getPlatforms().observe(this,new Observer<ArrayList<GasPlatform>>() {
+        provider.getPlatforms().observe(this, new Observer<ArrayList<GasPlatform>>() {
 
-            public void onChanged(ArrayList<GasPlatform> gasPlatforms){
+            public void onChanged(ArrayList<GasPlatform> gasPlatforms) {
                 ADP adp = new ADP(gasPlatforms);
                 recyclerView.setAdapter(adp);
 
             }
-    });
+        });
     }
 
     @Override
@@ -81,6 +81,23 @@ public class FragmentGasPlatform extends Fragment {
             holder.title.setText(data.get(position).getDenominazione());
         }
 
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
 
+        private class ViewHolder extends RecyclerView.ViewHolder {
+            TextView title;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                title = itemView.findViewById(R.id.title);
+
+
+            }
+
+
+        }
     }
 }
