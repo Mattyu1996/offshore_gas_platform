@@ -1,14 +1,21 @@
 package it.univaq.offshoregasplatform;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class FragmentGasPlatform extends Fragment {
 
@@ -26,5 +33,54 @@ public class FragmentGasPlatform extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
+        provider.getPlatforms().observe(this,new Observer<ArrayList<GasPlatform>>() {
+
+            public void onChanged(ArrayList<GasPlatform> gasPlatforms){
+                ADP adp = new ADP(gasPlatforms);
+                recyclerView.setAdapter(adp);
+
+            }
+    });
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            current = (MainActivity) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        current = null;
+    }
+
+    private class ADP extends RecyclerView.Adapter<ADP.ViewHolder> {
+
+        private ArrayList<GasPlatform> data = new ArrayList<>();
+
+        public ADP(ArrayList<GasPlatform> gasPlatforms) {
+            this.data.addAll(gasPlatforms);
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new ViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.adapter, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+            holder.title.setText(data.get(position).getDenominazione());
+        }
+
+
     }
 }
