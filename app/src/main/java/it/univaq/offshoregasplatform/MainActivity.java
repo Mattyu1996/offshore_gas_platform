@@ -1,5 +1,6 @@
 package it.univaq.offshoregasplatform;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.content.BroadcastReceiver;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import java.util.ArrayList;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -27,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
                 ArrayList<GasPlatform> platforms = intent.getParcelableArrayListExtra("platforms");
                 provider.setPlatforms(platforms);
-
                 //Aggiorno le piattaforme vicine
                 calculateNearLocations();
             }
@@ -40,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         locationClient = LocationServices.getFusedLocationProviderClient(this);
+        GasPlatformViewModel provider = ViewModelProviders.of(this).get(GasPlatformViewModel.class);
 
         setContentView(R.layout.activity_main);
-
-        GasPlatformViewModel provider = ViewModelProviders.of(this).get(GasPlatformViewModel.class);
 
         //Chiamo il Database Service per aggiornare la lista delle piattaforme nel provider
         Intent intent = new Intent(MainActivity.this, DatabaseService.class);
@@ -74,8 +76,33 @@ public class MainActivity extends AppCompatActivity {
                 .unregisterReceiver(receiver);
     }
 
-    protected void calculateNearLocations(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case R.id.exit :
+                new ExitDialog().show(getSupportFragmentManager(),"exit");
+                break;
+            case R.id.listView :
+                //Setto il fragmentList
+                System.out.println("Lista");
+                break;
+            case R.id.mapView :
+                //Setto il fragmentMaps
+                System.out.println("Mappa");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void calculateNearLocations(){
         final GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
         final ArrayList<GasPlatform> piattaforme = provider.getPlatforms().getValue();
         System.out.println("Nel ViewModel ci sono: "+piattaforme.size()+" piattaforme");
