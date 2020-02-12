@@ -2,24 +2,13 @@ package it.univaq.offshoregasplatform;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (action.equals(DatabaseService.FILTER_GET)) {
                 ArrayList<GasPlatform> platforms = intent.getParcelableArrayListExtra("platforms");
-                System.out.println("MainActivity ha ricevuto: " + platforms.size() + " piattaforme");
+                GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
+                provider.setPlatforms(platforms);
             }
         }
     };
@@ -43,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        //Chiamo il Database Service per ottenere la lista delle piattaforme
+        GasPlatformViewModel provider = ViewModelProviders.of(this).get(GasPlatformViewModel.class);
+
+        //Chiamo il Database Service per aggiornare la lista delle piattaforme nel provider
         Intent intent = new Intent(MainActivity.this, DatabaseService.class);
         intent.putExtra(DatabaseService.EXTRA_ACTION, DatabaseService.ACTION_GET);
         startService(intent);
