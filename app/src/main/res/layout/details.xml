@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,215 +17,275 @@
                 android:id="@+id/denominazione"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_denominazione"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Denominazione"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_denominazione"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/stato"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_stato"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Stato"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_stato"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/tipo"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_tipo"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Tipo"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_tipo"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/minerale"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_minerale"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Minerale"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_minerale"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/operatore"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_operatore"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Operatore"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_operatore"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/titoloMinerario"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_titoloMinerario"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Titolo Minerario"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_titoloMinerario"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/centraleCollegata"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_centraleCollegata"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Centrale Collegata"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_centraleCollegata"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/zona"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_zona"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Zona"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_zona"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/foglio"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_foglio"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Foglio"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_foglio"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/sezioneUnimig"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_sezioneUnimig"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="sezioneUnimig"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_sezioneUnimig"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/capitaneriaDiPorto"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_capitaneriaDiPorto"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Capitaneria Di Porto"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_capitaneriaDiPorto"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/dimensioni"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_dimensioni"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Dimensione"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_dimensioni"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/codice"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_codice"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Codice"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_codice"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/annoCostruzione"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_annoCostruzione"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Anno Costruzione"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_annoCostruzione"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/pozziAllacciati"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_pozziAllacciati"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Pozzi Allacciati"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_pozziAllacciati"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/pozziProduttiviNonEroganti"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_pozziProduttiviNonEroganti"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Pozzi Produttivi Non Eroganti"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_pozziProduttiviNonEroganti"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/pozziInProduzione"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_pozziInProduzione"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Pozzi In Produzione"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_pozziInProduzione"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/pozziInMonitoraggio"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_pozziInMonitoraggio"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Pozzi In Monitoraggio"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_pozziInMonitoraggio"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/distanzaCosta"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_distanzaCosta"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Distanza Costa"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_distanzaCosta"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/altezza"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_altezza"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Altezza"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/valore_altezza"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
+
             <TextView
                 android:id="@+id/profonditaFondale"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
-                android:text="Denominazione" />
-            <TextView
-                android:id="@+id/valore_profonditaFondale"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:text="Denominazione" />
+                android:text="Profondita Fondale"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        <TextView
+            android:id="@+id/valore_profonditaFondale"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Denominazione" />
         </LinearLayout>
-
     </ScrollView>
 
 
