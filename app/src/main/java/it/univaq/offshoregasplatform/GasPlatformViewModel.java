@@ -11,6 +11,16 @@ public class GasPlatformViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<GasPlatform>> nearPlatforms = new MutableLiveData<>();
 
+    public MutableLiveData<GasPlatform> getCurrentPlatform() {
+        return currentPlatform;
+    }
+
+    public void setCurrentPlatform(MutableLiveData<GasPlatform> currentPlatform) {
+        this.currentPlatform = currentPlatform;
+    }
+
+    private MutableLiveData<GasPlatform> currentPlatform = new MutableLiveData<>();
+
     public void setNearPlatforms(ArrayList<GasPlatform> piattaformeVicine){
         this.nearPlatforms.setValue(piattaformeVicine);
     }

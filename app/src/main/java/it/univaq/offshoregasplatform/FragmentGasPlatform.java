@@ -94,9 +94,22 @@ public class FragmentGasPlatform extends Fragment {
 
                 title = itemView.findViewById(R.id.title);
 
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(current != null) {
+
+                            //Setto la piattaforma cliccata come piattaforma corrente nel Provider
+                            provider.getCurrentPlatform().setValue(data.get(getAdapterPosition()));
+                            current.setMyFragment(new FragmentDetail());
+
+                        }
+                    }
+                });
+
 
             }
-
 
         }
     }
