@@ -57,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-
         //Chiamo il Database Service per aggiornare la lista delle piattaforme nel provider
         Intent intent = new Intent(MainActivity.this, DatabaseService.class);
         intent.putExtra(DatabaseService.EXTRA_ACTION, DatabaseService.ACTION_GET);
         startService(intent);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, new FragmentMaps(), "platforms")
+                .commit();
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, new FragmentGasPlatform())
