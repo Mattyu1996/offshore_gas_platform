@@ -3,6 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/denominazione"
         android:layout_width="match_parent"
@@ -213,6 +217,12 @@
         android:layout_width="match_parent"
         android:layout_height="29dp"
         android:text="Denominazione" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 
 </LinearLayout>
