@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,12 +37,13 @@ public class FragmentDetail extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final TextView denominazione = view.findViewById(R.id.valore_denominazione);
         provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
         provider.getCurrentPlatform().observe(this, new Observer<GasPlatform>() {
             @Override
             public void onChanged(GasPlatform platform) {
 
-
+                denominazione.setText(platform.getDenominazione());
 
             }
         });
