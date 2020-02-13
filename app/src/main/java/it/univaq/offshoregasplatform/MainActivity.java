@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(DatabaseService.EXTRA_ACTION, DatabaseService.ACTION_GET);
         startService(intent);
 
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, new FragmentGasPlatform())
+                .commit();
+
     }
 
 
