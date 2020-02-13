@@ -38,6 +38,27 @@ public class FragmentDetail extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextView denominazione = view.findViewById(R.id.valore_denominazione);
+        TextView stato = view.findViewById(R.id.valore_stato);
+        TextView minerale = view.findViewById(R.id.valore_minerale);
+        TextView operatore = view.findViewById(R.id.valore_operatore);
+        TextView titoloMinerario = view.findViewById(R.id.valore_titoloMinerario);
+        TextView centraleCollegata = view.findViewById(R.id.valore_centraleCollegata);
+        TextView zona = view.findViewById(R.id.valore_zona);
+        TextView foglio = view.findViewById(R.id.valore_foglio);
+        TextView sezioneUnimig = view.findViewById(R.id.valore_sezioneUnimig);
+        TextView capitaneriaDiPorto = view.findViewById(R.id.valore_capitaneriaDiPorto);
+        TextView dimensioni = view.findViewById(R.id.valore_dimensioni);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+        TextView tipo = view.findViewById(R.id.valore_tipo);
+
+
         provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
         provider.getCurrentPlatform().observe(this, new Observer<GasPlatform>() {
             @Override
