@@ -63,15 +63,15 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, new FragmentMaps(), "platforms")
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, new FragmentGasPlatform())
+                .add(R.id.frameLayout, new FragmentGasPlatform(), "platforms")
                 .commit();
 
     }
 
+    public void setMyFragment(Fragment fragment) {
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
+    }
 
     @Override
     protected void onResume() {
@@ -111,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.listView :
                 //Setto il fragmentList
                 System.out.println("Lista");
+                setMyFragment(new FragmentGasPlatform());
                 break;
             case R.id.mapView :
                 //Setto il fragmentMaps
                 System.out.println("Mappa");
+                setMyFragment(new FragmentMaps());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -145,8 +147,10 @@ public class MainActivity extends AppCompatActivity {
                             piattaformeVicine.add(plt);
                         }
                     }
-                    System.out.println("Nel ViewModel ci sono: "+piattaformeVicine.size()+" piattaforme vicine");
+
                     provider.setNearPlatforms(piattaformeVicine);
+                    System.out.println("Nel ViewModel ci sono: "+provider.getNearPlatforms().getValue().size()+" piattaforme vicine");
+
                 }
             });
         }

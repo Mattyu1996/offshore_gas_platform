@@ -1,7 +1,10 @@
 package it.univaq.offshoregasplatform;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +13,32 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
-import androidx.fragment.app.Fragment;
 
 public class FragmentMaps extends Fragment implements OnMapReadyCallback {
 
     private GasPlatformViewModel provider;
+
+    public static FragmentMaps getInstance(ArrayList<GasPlatform> platforms) {
+        FragmentMaps f = new FragmentMaps();
+
+        Bundle b = new Bundle();
+        b.putParcelableArrayList("platforms", platforms);
+
+        f.setArguments(b);
+        return f;
+    }
 
     @Nullable
     @Override
@@ -45,38 +57,48 @@ public class FragmentMaps extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-
-        if(getArguments() != null) {
-            GasPlatform platform = getArguments().getParcelable("platforms");
-            if (platform != null) {
-
-                MarkerOptions options = new MarkerOptions();
-                options.title(platform.getDenominazione());
-                options.position(new LatLng(platform.getLatitudine(), platform.getLongitudine()));
-
-                googleMap.addMarker(options);
-
+        //Piazzo il marcatore dello smartphone
+        FusedLocationProviderClient locationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        locationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                //Imposto la posizione della mappa sulla posizione dello smartphone
                 googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(platform.getLatitudine(), platform.getLongitudine()), 12f));
+                                new LatLng(location.getLatitude(), location.getLongitude()), 12f));
+
+                //Piazzo il marcatore dello smartphone
+                MarkerOptions options = new MarkerOptions();
+                options.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                googleMap.addMarker(options);
+
             }
+        });
+
+        if(getArguments() != null) {
+
+            //Piazzo i marcatori delle piattaforme
+            ArrayList<GasPlatform> platforms = getArguments().getParcelableArrayList("platforms");
+            for(GasPlatform plt: platforms){
+                MarkerOptions options = new MarkerOptions();
+                options.title(plt.getDenominazione());
+                options.position(new LatLng(plt.getLatitudine(), plt.getLongitudine()));
+
+                googleMap.addMarker(options);
+            }
+
         }
         else  {
-            provider.getPlatforms().observe(this, new Observer<ArrayList<GasPlatform>>() {
-                @Override
-                public void onChanged(ArrayList<GasPlatform> platforms) {
+            ArrayList<GasPlatform> platforms = provider.getNearPlatforms().getValue();
+            for(GasPlatform plt: platforms){
+                MarkerOptions options = new MarkerOptions();
+                options.title(plt.getDenominazione());
+                options.position(new LatLng(plt.getLatitudine(), plt.getLongitudine()));
 
-                    while(platforms.iterator().hasNext()){
-                        GasPlatform current =platforms.iterator().next();
+                googleMap.addMarker(options);
+            }
 
-                        MarkerOptions options = new MarkerOptions();
-                        options.title(current.getDenominazione());
-                        options.position(new LatLng(current.getLatitudine(), current.getLongitudine()));
-
-                        googleMap.addMarker(options);
-                    }
-                }
-            });
         }
     }
 

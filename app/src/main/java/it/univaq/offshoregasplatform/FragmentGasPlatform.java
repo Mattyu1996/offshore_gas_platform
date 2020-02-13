@@ -25,7 +25,7 @@ public class FragmentGasPlatform extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_gs_list, container);
+        return inflater.inflate(R.layout.fragment_gs_list, container, false);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FragmentGasPlatform extends Fragment {
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
-        provider.getPlatforms().observe(this, new Observer<ArrayList<GasPlatform>>() {
+        provider.getNearPlatforms().observe(this, new Observer<ArrayList<GasPlatform>>() {
 
             public void onChanged(ArrayList<GasPlatform> gasPlatforms) {
                 ADP adp = new ADP(gasPlatforms);
