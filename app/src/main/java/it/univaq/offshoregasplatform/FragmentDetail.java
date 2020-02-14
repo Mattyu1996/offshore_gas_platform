@@ -38,33 +38,54 @@ public class FragmentDetail extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextView denominazione = view.findViewById(R.id.valore_denominazione);
-        TextView stato = view.findViewById(R.id.valore_stato);
-        TextView minerale = view.findViewById(R.id.valore_minerale);
-        TextView operatore = view.findViewById(R.id.valore_operatore);
-        TextView titoloMinerario = view.findViewById(R.id.valore_titoloMinerario);
-        TextView centraleCollegata = view.findViewById(R.id.valore_centraleCollegata);
-        TextView zona = view.findViewById(R.id.valore_zona);
-        TextView foglio = view.findViewById(R.id.valore_foglio);
-        TextView sezioneUnimig = view.findViewById(R.id.valore_sezioneUnimig);
-        TextView capitaneriaDiPorto = view.findViewById(R.id.valore_capitaneriaDiPorto);
-        TextView dimensioni = view.findViewById(R.id.valore_dimensioni);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
-        TextView tipo = view.findViewById(R.id.valore_tipo);
+        final TextView stato = view.findViewById(R.id.valore_stato);
+        final TextView tipo = view.findViewById(R.id.valore_tipo);
+        final TextView minerale = view.findViewById(R.id.valore_minerale);
+        final TextView operatore = view.findViewById(R.id.valore_operatore);
+        final TextView titoloMinerario = view.findViewById(R.id.valore_titoloMinerario);
+        final TextView centraleCollegata = view.findViewById(R.id.valore_centraleCollegata);
+        final TextView zona = view.findViewById(R.id.valore_zona);
+        final TextView foglio = view.findViewById(R.id.valore_foglio);
+        final TextView sezioneUnimig = view.findViewById(R.id.valore_sezioneUnimig);
+        final TextView capitaneriaDiPorto = view.findViewById(R.id.valore_capitaneriaDiPorto);
+        final TextView dimensioni = view.findViewById(R.id.valore_dimensioni);
+        final TextView codice = view.findViewById(R.id.valore_codice);
+        final TextView annoCostruzione = view.findViewById(R.id.valore_annoCostruzione);
+        final TextView pozziAllacciati = view.findViewById(R.id.valore_pozziAllacciati);
+        final TextView pozziProduttiviNonEroganti = view.findViewById(R.id.valore_pozziProduttiviNonEroganti);
+        final TextView pozziInProduzione = view.findViewById(R.id.valore_pozziInProduzione);
+        final TextView pozziInMonitoraggio = view.findViewById(R.id.valore_pozziInMonitoraggio);
+        final TextView distanzaCosta = view.findViewById(R.id.valore_distanzaCosta);
+        final TextView altezza = view.findViewById(R.id.valore_altezza);
+        final TextView profonditaFondale = view.findViewById(R.id.valore_profonditaFondale);
 
 
         provider = ViewModelProviders.of(getActivity()).get(GasPlatformViewModel.class);
         provider.getCurrentPlatform().observe(this, new Observer<GasPlatform>() {
             @Override
             public void onChanged(GasPlatform platform) {
-
+                System.out.println(platform.getCodice());
                 denominazione.setText(platform.getDenominazione());
+                stato.setText(platform.getStato());
+                tipo.setText(platform.getTipo());
+                minerale.setText(platform.getMinerale());
+                operatore.setText(platform.getOperatore());
+                titoloMinerario.setText(platform.getTitoloMinerario());
+                centraleCollegata.setText(platform.getCentraleCollegata());
+                zona.setText(platform.getZona());
+                foglio.setText(platform.getFoglio());
+                sezioneUnimig.setText(platform.getSezioneUnimig());
+                capitaneriaDiPorto.setText(platform.getCapitaneriaDiPorto());
+                dimensioni.setText(platform.getDimensioni());
+                codice.setText(String.valueOf(platform.getCodice()));
+                annoCostruzione.setText(String.valueOf(platform.getAnnoCostruzione()));
+                pozziAllacciati.setText(String.valueOf(platform.getPozziAllacciati()));
+                pozziProduttiviNonEroganti.setText(String.valueOf(platform.getPozziProduttiviNonEroganti()));
+                pozziInProduzione.setText(String.valueOf(platform.getPozziInProduzione()));
+                pozziInMonitoraggio.setText(String.valueOf(platform.getPozziInMonitoraggio()));
+                distanzaCosta.setText(platform.getDistanzaCosta()+" km");
+                altezza.setText(platform.getAltezza()+" m");
+                profonditaFondale.setText(platform.getProfonditaFondale()+" m");
 
             }
         });
