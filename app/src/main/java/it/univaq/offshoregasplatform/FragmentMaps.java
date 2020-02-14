@@ -4,6 +4,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 public class FragmentMaps extends Fragment implements OnMapReadyCallback {
 
     private GasPlatformViewModel provider;
+    private MainActivity current;
 
     public static FragmentMaps getInstance(ArrayList<GasPlatform> platforms) {
         FragmentMaps f = new FragmentMaps();
@@ -53,6 +56,21 @@ public class FragmentMaps extends Fragment implements OnMapReadyCallback {
 
         SupportMapFragment map = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         map.getMapAsync(this);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            current = (MainActivity) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        current = null;
     }
 
     @Override
@@ -81,25 +99,35 @@ public class FragmentMaps extends Fragment implements OnMapReadyCallback {
             //Piazzo i marcatori delle piattaforme
             ArrayList<GasPlatform> platforms = getArguments().getParcelableArrayList("platforms");
             for(GasPlatform plt: platforms){
-                MarkerOptions options = new MarkerOptions();
-                options.title(plt.getDenominazione());
-                options.position(new LatLng(plt.getLatitudine(), plt.getLongitudine()));
-
-                googleMap.addMarker(options);
+                Marker marker = googleMap.addMarker( new MarkerOptions()
+                        .title(plt.getDenominazione())
+                        .position(new LatLng(plt.getLatitudine(), plt.getLongitudine())));
+                marker.setTag(plt);
             }
 
         }
         else  {
             ArrayList<GasPlatform> platforms = provider.getNearPlatforms().getValue();
             for(GasPlatform plt: platforms){
-                MarkerOptions options = new MarkerOptions();
-                options.title(plt.getDenominazione());
-                options.position(new LatLng(plt.getLatitudine(), plt.getLongitudine()));
+                Marker marker = googleMap.addMarker( new MarkerOptions()
+                .title(plt.getDenominazione())
+                .position(new LatLng(plt.getLatitudine(), plt.getLongitudine())));
+                marker.setTag(plt);
 
-                googleMap.addMarker(options);
             }
 
         }
+
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                //ottengo la posizione del marker
+                GasPlatform plt = (GasPlatform) marker.getTag();
+                provider.getCurrentPlatform().setValue(plt);
+                System.out.println(plt.getDenominazione());
+                current.setMyFragment(new FragmentDetail());
+            }
+        });
     }
 
 }
