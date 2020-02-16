@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 locationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
+                        if(location == null){
+                            locationClient.getLastLocation();
+                        }
                         ArrayList<GasPlatform> piattaformeVicine = new ArrayList<>();
                         //Per ogni piattaforma presente nel ViewModel calcolo la distanza dall'utente
                         for (GasPlatform plt: piattaforme){
