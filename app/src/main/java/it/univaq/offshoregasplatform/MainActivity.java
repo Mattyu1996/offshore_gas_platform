@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -133,34 +136,47 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED){
             //Controllo se il gps è acceso
-            LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+            final LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
             boolean isEnabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
             if(isEnabled){
-                //Ottengo la location dello smartphone
-                locationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                //creo la richiesta per la localizzazione
+                final LocationRequest locationRequest = LocationRequest.create();
+                locationRequest.setInterval(10000);
+                locationRequest.setFastestInterval(5000);
+                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                //creo la funzione di callback da utilizzare nell'aggiornamento della posizione
+                final LocationCallback locationCallback = new LocationCallback(){
                     @Override
-                    public void onSuccess(Location location) {
-                        ArrayList<GasPlatform> piattaformeVicine = new ArrayList<>();
-                        //Per ogni piattaforma presente nel ViewModel calcolo la distanza dall'utente
-                        for (GasPlatform plt: piattaforme){
-                            //Calcolo la distanza fra la location dello smartphone e la piattaforme in questione
-                            float[] results = new float[1];
-                            Location.distanceBetween(location.getLatitude(), location.getLongitude(), plt.getLatitudine(), plt.getLongitudine(), results);
-                            //Converto la distanza da metri a chilometri
-                            float distanzaInKm = results[0]/1000;
-                            //System.out.println("Distanza dalla piattaforma "+plt.getDenominazione()+": "+distanzaInKm+" km");
-                            //Se la piattaforma è nel raggio di 100km allora la inserisco nelle piattaforme vicine
-                            if(distanzaInKm <= 100){
-                                piattaformeVicine.add(plt);
+                    public void onLocationResult(LocationResult locationresult){
+                        if(locationresult == null){
+                            return;
+                        }
+                        for (Location location : locationresult.getLocations()) {
+                            if (location != null) {
+                                ArrayList<GasPlatform> piattaformeVicine = new ArrayList<>();
+                                //Per ogni piattaforma presente nel ViewModel calcolo la distanza dall'utente
+                                for (GasPlatform plt: piattaforme){
+                                    //Calcolo la distanza fra la location dello smartphone e la piattaforme in questione
+                                    float[] results = new float[1];
+                                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), plt.getLatitudine(), plt.getLongitudine(), results);
+                                    //Converto la distanza da metri a chilometri
+                                    float distanzaInKm = results[0]/1000;
+                                    //System.out.println("Distanza dalla piattaforma "+plt.getDenominazione()+": "+distanzaInKm+" km");
+                                    //Se la piattaforma è nel raggio di 100km allora la inserisco nelle piattaforme vicine
+                                    if(distanzaInKm <= 100){
+                                        piattaformeVicine.add(plt);
+                                    }
+                                    provider.setNearPlatforms(piattaformeVicine);
+                                    System.out.println("Nel ViewModel ci sono: "+provider.getNearPlatforms().getValue().size()+" piattaforme vicine");
+                                }
                             }
                         }
-
-                        provider.setNearPlatforms(piattaformeVicine);
-                        System.out.println("Nel ViewModel ci sono: "+provider.getNearPlatforms().getValue().size()+" piattaforme vicine");
-
                     }
-                });
+                };
+                //aggiorno la posizione
+                locationClient.requestLocationUpdates(locationRequest, locationCallback, null);
             } else {
+                //se il gps è disattivato mostro il dialog per l'attivazione
                 System.out.println("il gps non è attivo");
                 new EnableGPSdialog().show(getSupportFragmentManager(),"nogps");
             }
