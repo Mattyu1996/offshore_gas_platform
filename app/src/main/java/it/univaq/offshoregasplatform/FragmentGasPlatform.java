@@ -1,6 +1,7 @@
 package it.univaq.offshoregasplatform;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,7 @@ public class FragmentGasPlatform extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
             holder.title.setText(data.get(position).getDenominazione());
+            holder.subtitle.setText(data.get(position).getCentraleCollegata());
         }
 
         @Override
@@ -88,11 +90,13 @@ public class FragmentGasPlatform extends Fragment {
 
         private class ViewHolder extends RecyclerView.ViewHolder {
             TextView title;
+            TextView subtitle;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 title = itemView.findViewById(R.id.title);
+                subtitle = itemView.findViewById(R.id.subtitle);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -100,9 +104,11 @@ public class FragmentGasPlatform extends Fragment {
 
                         if(current != null) {
 
-                            //Setto la piattaforma cliccata come piattaforma corrente nel Provider
-                            provider.getCurrentPlatform().setValue(data.get(getAdapterPosition()));
-                            current.setMyFragment(new FragmentDetail());
+                            //Faccio partire l'activity per i dettagli
+                            Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                            intent.setAction("DETAILS");
+                            intent.putExtra("platform", data.get(getAdapterPosition()));
+                            startActivity(intent);
 
                         }
                     }

@@ -5,6 +5,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -123,9 +124,11 @@ public class FragmentMaps extends Fragment implements OnMapReadyCallback {
             public void onInfoWindowClick(Marker marker) {
                 //ottengo la posizione del marker
                 GasPlatform plt = (GasPlatform) marker.getTag();
-                provider.getCurrentPlatform().setValue(plt);
-                System.out.println(plt.getDenominazione());
-                current.setMyFragment(new FragmentDetail());
+                //Faccio partire l'activity per i dettagli
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.setAction("DETAILS");
+                intent.putExtra("platform", plt);
+                startActivity(intent);
             }
         });
     }
