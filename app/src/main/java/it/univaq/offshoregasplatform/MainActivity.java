@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("nogps");
+        if(fragment != null){
+            DialogFragment dialog = (DialogFragment) fragment;
+            dialog.dismiss();
+        }
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(receiver, new IntentFilter(DatabaseService.FILTER_GET));

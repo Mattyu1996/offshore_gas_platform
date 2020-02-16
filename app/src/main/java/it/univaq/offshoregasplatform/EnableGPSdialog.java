@@ -25,8 +25,8 @@ public class EnableGPSdialog extends DialogFragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface d, int id) {
-                getActivity().startActivity(new Intent(action));
                 d.dismiss();
+                getActivity().startActivity(new Intent(action));
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
