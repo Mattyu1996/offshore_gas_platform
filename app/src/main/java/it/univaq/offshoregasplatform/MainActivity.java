@@ -169,9 +169,9 @@ public class MainActivity extends AppCompatActivity {
                                     if(distanzaInKm <= 100){
                                         piattaformeVicine.add(plt);
                                     }
-                                    provider.setNearPlatforms(piattaformeVicine);
-                                    System.out.println("Nel ViewModel ci sono: "+provider.getNearPlatforms().getValue().size()+" piattaforme vicine");
                                 }
+                                provider.setNearPlatforms(piattaformeVicine);
+                                System.out.println("Nel ViewModel ci sono: "+provider.getNearPlatforms().getValue().size()+" piattaforme vicine");
                             }
                         }
                     }
