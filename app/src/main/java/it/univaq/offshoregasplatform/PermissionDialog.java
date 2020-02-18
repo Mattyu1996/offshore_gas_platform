@@ -24,7 +24,6 @@ public class PermissionDialog extends DialogFragment {
         builder.setPositiveButton("Ho capito", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             }
         });
