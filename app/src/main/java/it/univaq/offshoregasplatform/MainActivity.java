@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<GasPlatform> platforms = intent.getParcelableArrayListExtra("platforms");
                 provider.setPlatforms(platforms);
                 //Aggiorno le piattaforme vicine
-                calculateNearLocations();
+                calculateNearPlatforms();
             }
         }
     };
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void calculateNearLocations(){
+    protected void calculateNearPlatforms(){
         final GasPlatformViewModel provider = ViewModelProviders.of(MainActivity.this).get(GasPlatformViewModel.class);
         final ArrayList<GasPlatform> piattaforme = provider.getPlatforms().getValue();
         System.out.println("Nel ViewModel ci sono: "+piattaforme.size()+" piattaforme");
